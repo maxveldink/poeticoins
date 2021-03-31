@@ -48,13 +48,13 @@ jobs:
   deploy:
     needs: test
 
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-18.04
 
     steps:
     - uses: actions/checkout@v2
       with:
-        ref: master
+        ref: main
         fetch-depth: 0
     - uses: mhanberg/gigalixir-action@v0.4.0
       with:
