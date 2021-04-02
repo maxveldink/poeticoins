@@ -2,7 +2,7 @@ defmodule PoeticoinsWeb.ProductComponent do
   use PoeticoinsWeb, :live_component
   import PoeticoinsWeb.ProductHelpers
 
-  def update(%{trade: trade} = assigns, socket) when not is_nil(trade) do
+  def update(%{trade: trade} = _assigns, socket) when not is_nil(trade) do
     socket = assign(socket, :trade, trade)
     {:ok, socket}
   end
@@ -13,6 +13,7 @@ defmodule PoeticoinsWeb.ProductComponent do
       socket
       |> assign(:product, product)
       |> assign(:trade, Poeticoins.get_last_trade(product))
+      |> assign(:timezone, assigns.timezone)
 
     {:ok, socket}
   end
@@ -48,7 +49,7 @@ defmodule PoeticoinsWeb.ProductComponent do
         </div>
 
         <div class="trade-time">
-            <%= human_datetime(@trade.traded_at) %>
+            <%= human_datetime(@trade.traded_at, @timezone) %>
         </div>
     </div>
     """
