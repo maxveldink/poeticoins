@@ -1,0 +1,26 @@
+<div class="poeticoins-toolbar">
+    <div class="title">Poeticoins</div>
+
+    <form action="#" phx-submit="add-product">
+        <select name="product_id" class="select-product">
+            <option selected disabled>Add a Crypto Product</option>
+            <%= for {exchange_name, products} <- grouped_products_by_exchange_name() do %>
+                <optgroup label="<%= exchange_name %>">
+                    <%= for product <- products do %>
+                        <option value="<%= to_string(product) %>">
+                            <%= crypto_name(product) %> - <%= fiat_character(product) %>
+                        </option>
+                    <% end %>
+                </optgroup>
+            <% end %>
+        </select>
+
+        <button type="submit" phx-disable-with="Loading...">+</button>
+    </form>
+</div>
+
+<div class="product-components">
+    <%= for product <- @products do %>
+        <%= live_component @socket, PoeticoinsWeb.ProductComponent, id: product %>
+    <% end %>
+</div>
